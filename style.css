@@ -1,3 +1,76 @@
+
+
+
 body{
     background-color: purple;
 }
+
+.product {
+    background-color: rgba(0, 0, 0, 0.403);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: 400px;
+    height: 370px;
+
+  }
+  
+  img{
+    width: 45%;
+    height: 38%;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px;
+    margin-bottom: 0;
+  }
+  
+  .description {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  button {
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15), 0 2px 0 rgba(0, 0, 0, 0.1);
+    
+  }
+  
+#sellerProfil{
+    font-style: italic;
+}
+
+h2{
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+p{
+    margin-bottom: 0px;
+}
+
+#market{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+
+}
+
+.module{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
