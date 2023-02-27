@@ -14,13 +14,13 @@ xhr.onload = function() {
         <div class="module">
             <div class="product">
                 <h2 id="ProductTitle${i}">*produkt*</h2>
-                <img id="imgOut${i}"> 
+                    <img class="productImg" id="imgOut${i}"> 
                 <div class="description">
-                <p id="Price${i}"">Price: </p>
-                <p id="Description${i}"">Description: </p>
-                <p id="sellerProfil${i}"">seller profil</p>
-                <button id="buttonBuy${i}"">Buy</button>
-                </div>
+                    <p id="Price${i}"">Price: </p>
+                    <p id="Description${i}"">Description: </p>
+                    <p id="sellerProfil${i}"">seller profil</p>
+                    <button id="buttonBuy${i}"">Buy</button>
+                </div>  
             </div>
         </div>`
     
