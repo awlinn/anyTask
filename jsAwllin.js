@@ -1,10 +1,11 @@
 let xhr = new XMLHttpRequest();
+let inputDat = [];
 xhr.open('GET','https://my-json-server.typicode.com/awlinn/anyTask/products');
 xhr.responseType = 'json';
 xhr.send();
 xhr.onload = function() {
-    let inputDat = xhr.response
-    console.log(inputDat)
+    inputDat = xhr.response;
+    console.log(inputDat);          
 
     let market = document.getElementById("market");
 
@@ -13,13 +14,13 @@ xhr.onload = function() {
         market.innerHTML += `
         <div class="module">
             <div class="product">
-                <h2 id="ProductTitle${i}">*produkt*</h2>
+                <h2 id="ProductTitle${i}">*produkt*</h2>            
                     <img class="productImg" id="imgOut${i}"> 
                 <div class="description">
-                    <p id="Price${i}"">Price: </p>
-                    <p id="Description${i}"">Description: </p>
-                    <p id="sellerProfil${i}"">seller profil</p>
-                    <button id="buttonBuy${i}"">Buy</button>
+                    <p id="Price${i}">Price: </p>
+                    <p id="Description${i}">Description: </p>
+                    <p id="sellerProfil${i}">seller profil</p>
+                    <button id="buttonBuy${i}" data="${i}" onclick="addInBasket()">Buy</button>
                 </div>  
             </div>
         </div>`
@@ -33,7 +34,13 @@ xhr.onload = function() {
         Price.innerHTML += inputDat[i].price;
         Description.innerHTML += inputDat[i].description;
         imgOut.setAttribute("src", inputDat[i].photo_url);
-}
+
+       
+    }
+    
     
 };
 
+function addInBasket(){
+    console.log(inputDat.id);           
+}
