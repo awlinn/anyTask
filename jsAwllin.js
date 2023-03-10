@@ -9,7 +9,7 @@ xhr.onload = function() {
 
     let market = document.getElementById("market");
 
-    for (let i = 0; i < 5; i++){
+    for (let i = 0; i < inputDat.length; i++){
         
         market.innerHTML += `
         <div class="module">
@@ -19,8 +19,8 @@ xhr.onload = function() {
                 <div class="description">
                     <p id="Price${i}">Price: </p>
                     <p id="Description${i}">Description: </p>
-                    <p id="sellerProfil${i}">seller profil</p>
-                    <button id="buttonBuy${i}" data="${i}" onclick="addInBasket()">Buy</button>
+                    <a href="" id="sellerProfil">seller profil</a>
+                    <button id="buttonBuy${i}" data="${i}" onclick="addInBasket(this)">Buy</button>
                 </div>  
             </div>
         </div>`
@@ -31,7 +31,7 @@ xhr.onload = function() {
         let imgOut = document.getElementById(`imgOut${i}`);
 
         ProductTitle.innerHTML = inputDat[i].name;
-        Price.innerHTML += inputDat[i].price;
+        Price.innerHTML += inputDat[i].price + " $";
         Description.innerHTML += inputDat[i].description;
         imgOut.setAttribute("src", inputDat[i].photo_url);
 
@@ -41,6 +41,46 @@ xhr.onload = function() {
     
 };
 
-function addInBasket(){
-    console.log(inputDat.id);           
+let basket = document.getElementById("inBasket");
+let priceBasket = 0;
+
+let clear = 0;
+
+function addInBasket(odj){
+    
+
+    let objId = ghjk(odj.id);
+    
+    let priceObj = ghjk(document.getElementById(`Price${objId}`).textContent);
+    let nameObj = document.getElementById(`ProductTitle${objId}`).textContent;
+    let imgObj = document.getElementById(`imgOut${objId}`).src;
+    imgСomplet = `<img class="imgBasket" src="${imgObj}">`;
+    priceBasket += priceObj;
+    console.log(priceBasket);
+
+    if(clear <= 0){
+        basket.innerHTML = "";
+        basket.innerHTML += `<p> ${imgСomplet}${nameObj}|${priceObj}$</p>`;
+        clear ++;
+    }else{
+        basket.innerHTML += `<p> ${imgСomplet}${nameObj}|${priceObj}$</p>`;
+    }
+}
+
+
+function ghjk(obj){
+    return(parseInt(obj.match(/\d+/)))
+}
+let cartBasket = document.getElementById("cartBasket");
+cartBasket.style.display = "none";
+
+function openBasket() {
+  
+  if (cartBasket.style.display === "none") {
+    cartBasket.style.display = "block";
+  
+  } else {
+    cartBasket.style.display = "none";
+   
+  }
 }

@@ -1,16 +1,26 @@
 
-
+*{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
 body{
-    background-color: purple;
+    background-color: rgba(0, 0, 0, 0.597);
+     margin: 2% ;
+     padding: 0%;
 }
 
 .heder{
    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: baseline;
+   width: 100%;
+   justify-content: space-between;   
+   align-items: baseline;
 }
+
+main{
+  margin: 5vh 3vw;
+  display: block;
+}
+
 .basket{
    display: flex;
    align-items: center; 
@@ -22,38 +32,60 @@ body{
    width: 60px; 
 }
 
+.imgBasket{
+  height: 50px;
+  width: 50px;
+}
+
 #cartBasket{
+  display: none;
   width: 300px;
-  height: 100px;
+  height: auto;
   background-color: white;
   position: absolute;
   right: 3rem;
   margin-top: 4.5rem;
   border-radius: 5px;
    border: 1px solid black;
+   z-index: 1;
 }
 
 .basketImg{
-    height: 70px;
-    width: 60px;
+    height: 120%;
+    width: 100%;
     cursor: pointer;
 }
 
+.module{
+  max-height: 500px;
+  margin-bottom: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .product {
-    background-color: rgba(0, 0, 0, 0.403);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    width: 400px;
+    background-color: #00000061;   
+    height: 100%;
+    max-height: 500px;
+    width: 65%;
+    max-width: 350px;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .productImg{
-    width: 45%;
-    height: 38%;
+    width: 40%;
+    height: 40%;
     background-size: cover;
     background-position: center;
     margin-bottom: 20px;
     margin-bottom: 0;
+    border-radius: 10%;
   }
   
   .description {
@@ -88,19 +120,42 @@ h2{
     margin-bottom: 10px;
 }
 
-p{
-    margin-bottom: 0px;
+h1{
+  margin-left: 1%;
 }
+
+
 
 #market{
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-
-
+    grid-template-columns: repeat(3,33%);
+    grid-template-rows: repeat(2,50%);
+    grid-auto-flow: row;
+    position: relative;
+    gap: 2%;
 }
 
-.module{
-    margin-left: 10px;
-    margin-top: 10px;
+
+/* -----Responsive----- */
+
+@media screen and (max-width: 1000px){
+   #market {
+      grid-template-columns: repeat(2, 10fr);
+  }
+  .productImg{
+    width: 50%;
+    height: 40%;
+  }
+}
+
+@media screen and (max-width: 800px){
+  #market {
+      grid-template-columns: repeat(1, 1fr);
+      max-height: 900px;
+  }
+  main{
+    margin: 5vh 10vw;
+  }
 }
 
