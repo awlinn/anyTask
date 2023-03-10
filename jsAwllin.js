@@ -43,9 +43,14 @@ xhr.onload = function() {
 
 let basket = document.getElementById("inBasket");
 
+
 let priceBasket = 0;
 let button = document.getElementById('myButton');
 let backgroundBasket = document.getElementById('basketDivId');
+
+
+
+
 let clear = 0;
 
 function addInBasket(odj){
@@ -68,7 +73,6 @@ function addInBasket(odj){
         basket.innerHTML += `<p> ${imgСomplet}${nameObj}|${priceObj}$</p>`;
     }
 
-    
 
 
     backgroundBasket.classList.add('blink');

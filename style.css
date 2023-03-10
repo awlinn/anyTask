@@ -137,6 +137,7 @@ h1{
 }
 
 
+
 .blink {
   animation: blink 1s ease-in-out;
 }
@@ -147,6 +148,7 @@ h1{
   50% {background-color: rgba(255, 0, 0, 0.56); }
   100% { background-color: rgba(255, 0, 0, 0); }
 }
+
 
 
 /* -----Responsive----- */
