@@ -48,40 +48,31 @@ let priceBasket = 0;
 let button = document.getElementById('myButton');
 let backgroundBasket = document.getElementById('basketDivId');
 
-
-
-
-let clear = 0;
+let clear = false;
 
 function addInBasket(odj){
-    
-
     let objId = ghjk(odj.id);
     
     let priceObj = ghjk(document.getElementById(`Price${objId}`).textContent);
     let nameObj = document.getElementById(`ProductTitle${objId}`).textContent;
     let imgObj = document.getElementById(`imgOut${objId}`).src;
-    imgСomplet = `<img class="imgBasket" src="${imgObj}">`;
+    imgComplet = `<img class="imgBasket" src="${imgObj}">`;
+
     priceBasket += priceObj;
     console.log(priceBasket);
 
-    if(clear <= 0){
+    if(clear <= false){
         basket.innerHTML = "";
-        basket.innerHTML += `<p> ${imgСomplet}${nameObj}|${priceObj}$</p>`;
-        clear ++;
+        basket.innerHTML += `<p> ${imgComplet}${nameObj}|${priceObj}$</p>`;
+        clear = true;
     }else{
-        basket.innerHTML += `<p> ${imgСomplet}${nameObj}|${priceObj}$</p>`;
+        basket.innerHTML += `<p> ${imgComplet}${nameObj}|${priceObj}$</p>`;
     }
 
-
-
     backgroundBasket.classList.add('blink');
-  
   setTimeout(() => {
     backgroundBasket.classList.remove('blink'); 
-   
   }, 1000); 
-
 
 }
 
@@ -89,6 +80,8 @@ function addInBasket(odj){
 function ghjk(obj){
     return(parseInt(obj.match(/\d+/)))
 }
+
+
 let cartBasket = document.getElementById("cartBasket");
 cartBasket.style.display = "none";
 
