@@ -71,7 +71,7 @@ main{
     max-height: 500px;
     width: 65%;
     max-width: 350px;
-    padding: 1rem;
+    padding: 4%;
     border-radius: 1rem;
     color: #ffffff;
     display: flex;
@@ -125,14 +125,19 @@ h1{
   margin-left: 1%;
 }
 
+.buttonBuy{
+  color: red;
+  background-color: black;
+}
 
 
 #market{
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3,33%);
-    grid-template-rows: repeat(2,50%);
-    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    grid-auto-rows: minmax(100px, auto);
+    overflow:auto;
     position: relative;
     gap: 2%;
 }
@@ -152,25 +157,28 @@ h1{
 
 
 
-/* -----Responsive----- */
+/* -----Responsive-----  */
 
-@media screen and (max-width: 1000px){
-   #market {
-      grid-template-columns: repeat(2, 10fr);
+
+@media (max-width: 768px) {
+  #market {
+    grid-template-columns: repeat(2, 1fr);
   }
   .productImg{
-    width: 50%;
-    height: 40%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
   }
 }
 
-@media screen and (max-width: 800px){
+@media (max-width: 680px) {
   #market {
-      grid-template-columns: repeat(1, 1fr);
-      max-height: 900px;
+    grid-template-columns: 1fr;
   }
-  main{
-    margin: 5vh 10vw;
+  .productImg{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
   }
 }
 
