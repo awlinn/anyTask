@@ -56,9 +56,10 @@ let backgroundBasket = document.getElementById('basketDivId');
 let clear = false;
 
 function addInBasket(odj){            ////////////function addInBasket
-  console.log(odj);
+  
+  
   let objId = ghjk(odj.id);
-  console.log(objId);
+  
     let priceObj = ghjk(document.getElementById(`Price${objId}`).textContent);
     let nameObj = document.getElementById(`ProductTitle${objId}`).textContent;
     let imgObj = document.getElementById(`imgOut${objId}`).src;
@@ -87,14 +88,14 @@ function addInBasket(odj){            ////////////function addInBasket
       priceElement.innerText = "praice: " + databaseObj.price + " $";
     }
 
-    if(clear <= false){
+    if(clear == false){
         basket.innerHTML = "";
         basket.innerHTML += `<p> ${imgComplet}${nameObj}|${priceObj}$</p>`;
-        basket.innerHTML += `<button class="buttonBuy">go to buy</button>`;
+        basket.innerHTML += `<button class="buttonBuy" id="buttonBuyID">go to buy</button>`;
         clear = true;
     }else{
         basket.innerHTML += `<p> ${imgComplet}${nameObj}|${priceObj}$</p>`;
-        basket.innerHTML += `<button class="buttonBuy">go to buy</button>`;
+        basket.innerHTML += `<button class="buttonBuy" id="buttonBuyID">go to buy</button>`;
     }
 
     backgroundBasket.classList.add('blink');
@@ -102,6 +103,8 @@ function addInBasket(odj){            ////////////function addInBasket
     backgroundBasket.classList.remove('blink'); 
   }, 1000); 
 
+
+  openBuyMenu();
 }
 
 
@@ -117,15 +120,57 @@ function openBasket() {
   
   if (cartBasket.style.display === "none") {
     cartBasket.style.display = "block";
-  
+    
   } else {
     cartBasket.style.display = "none";
    
   }
 }
+  function openBuyMenu(){
+
+    const popup = document.querySelector('.popup');
+		const overlay = document.querySelector('.overlay');
+		const popupBtn = document.getElementById('buttonBuyID');   
+		
+   
+		popupBtn.addEventListener('click', () => {
+			popup.style.display = 'block';
+			overlay.style.display = 'block';
+		});
+
+		overlay.addEventListener('click', () => {
+			popup.style.display = 'none';
+			overlay.style.display = 'none';
+      if (cartBasket.style.display === "none") {
+        cartBasket.style.display = "block";
+      
+      } else {
+        cartBasket.style.display = "none";
+       
+      }
+		});
+    
+  }
+  const nameInput = document.getElementById("name").value;
+  const addressInput = document.getElementById("address").value;
+  const phoneInput = document.getElementById("phone").value;
+  const postNumberInput = document.getElementById("post_number").value;
 
 
-
+  const sendDataBtn = document.getElementById("sendData");
+  console.log(sendDataBtn);
+    sendDataBtn.addEventListener('click', function(e){
+      let data = JSON.stringify({
+        "name": nameInput,
+        "address":addressInput,
+        "phone":phoneInput,
+        "post_number":postNumberInput,
+        "status":"new",
+        "products":databaseArray
+      });
+      console.log(data);
+  });
+  
 
 
 /*
