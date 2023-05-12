@@ -1,50 +1,59 @@
-
-
-
+let data = null;
+const nameInput = document.getElementById("name");
+const addressInput = document.getElementById("address");
+const phoneInput = document.getElementById("phone");
+const postNumberInput = document.getElementById("post_number");
+const sendDataBtn = document.getElementById("sendData");
+let testString;
 
 
 let xhr = new XMLHttpRequest();
-let inputDat = [];
-xhr.open('GET','https://my-json-server.typicode.com/awlinn/anyTask/products');
-xhr.responseType = 'json';
-xhr.send();
-xhr.onload = function() {
-    inputDat = xhr.response;
-    console.log(inputDat);          
+xhr.withCredentials = false;
 
-    let market = document.getElementById("market");
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {    //retrieving data from the server and further processing them
 
-    for (let i = 0; i < inputDat.length; i++){
-        
-        market.innerHTML += `
-        <div class="module">
-            <div class="product">
-                <h2 id="ProductTitle${i}">*produkt*</h2>            
-                    <img class="productImg" id="imgOut${i}"> 
-                <div class="description">
-                    <p id="Price${i}">Price: </p>
-                    <p id="Description${i}">Description: </p>
-                    <a href="" id="sellerProfil">seller profil</a>
-                    <button id="buttonBuy${i}"  onclick="addInBasket(this)">Buy</button>
-                </div>  
-            </div>
-        </div>`
+ inputDat = JSON.parse(this.response); 
+ console.log(inputDat);
+ let market = document.getElementById("market");
+
+ for (let i = 0; i < inputDat.length; i++){     //cycle creating "tiles" on the market
+     
+     market.innerHTML += `
+     <div class="module">
+         <div class="product">
+             <h2 id="ProductTitle${i}">*produkt*</h2>            
+                 <img class="productImg" id="imgOut${i}"> 
+             <div class="description">
+                 <p id="Price${i}">Price: </p>
+                 <p id="Description${i}">Description: </p>
+                 <button id="buttonBuy${i}"  onclick="addInBasket(this)">Buy</button>
+             </div>  
+         </div>
+     </div>`//mb add sellerProfil // <a href="" id="sellerProfil">seller profil</a>
+ 
+     let ProductTitle = document.getElementById(`ProductTitle${i}`);
+     let Price = document.getElementById(`Price${i}`);
+     let Description = document.getElementById(`Description${i}`);
+     let imgOut = document.getElementById(`imgOut${i}`);
+
+     ProductTitle.innerHTML = inputDat[i].name;
+     Price.innerHTML += inputDat[i].price + " $";
+     Description.innerHTML += inputDat[i].description;
+     imgOut.setAttribute("src", inputDat[i].photo_url);
+
     
-        let ProductTitle = document.getElementById(`ProductTitle${i}`);
-        let Price = document.getElementById(`Price${i}`);
-        let Description = document.getElementById(`Description${i}`);
-        let imgOut = document.getElementById(`imgOut${i}`);
+ }
+  }
+});
 
-        ProductTitle.innerHTML = inputDat[i].name;
-        Price.innerHTML += inputDat[i].price + " $";
-        Description.innerHTML += inputDat[i].description;
-        imgOut.setAttribute("src", inputDat[i].photo_url);
+xhr.open("GET", "https://robocodemarketplace-bec8.restdb.io/rest/product");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("x-apikey", "64149cd5bc22d22cf7b2600f");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.send(data);
 
-       
-    }
     
-    
-};
 
 let basket = document.getElementById("inBasket");
 
@@ -54,62 +63,53 @@ let priceBasket = 0;
 let button = document.getElementById('myButton');
 let backgroundBasket = document.getElementById('basketDivId');
 let clear = false;
+let imgComplet;
+let nameObj;
+let priceObj;
 
 function addInBasket(odj){            ////////////function addInBasket
   
   
-  let objId = ghjk(odj.id);
+    let objId = parsing(odj.id);
+    
   
-    let priceObj = ghjk(document.getElementById(`Price${objId}`).textContent);
-    let nameObj = document.getElementById(`ProductTitle${objId}`).textContent;
+    priceObj = parsing(document.getElementById(`Price${objId}`).textContent);
+    nameObj = document.getElementById(`ProductTitle${objId}`).textContent;
     let imgObj = document.getElementById(`imgOut${objId}`).src;
     imgComplet = `<img class="imgBasket" src="${imgObj}">`;
 
     priceBasket += priceObj;
     
-    
-
-    let databaseObj = {
-      price : priceObj,
+    let databaseObj = {           ///////// creation database object
+      price: priceObj,
       name: nameObj,
-      img: imgObj
-    } ;
+      img: imgComplet
+    };
 
     databaseArray.push(databaseObj);
-   
-
-    console.log(priceBasket);
-    console.log(databaseArray);
-
-
-    function updateDiv() {
-      nameElement.innerText = databaseObj.name;
-      imgElement.src = databaseObj.img;
-      priceElement.innerText = "praice: " + databaseObj.price + " $";
-    }
-
-    if(clear == false){
-        basket.innerHTML = "";
-        basket.innerHTML += `<p> ${imgComplet}${nameObj}|${priceObj}$</p>`;
-        basket.innerHTML += `<button class="buttonBuy" id="buttonBuyID">go to buy</button>`;
-        clear = true;
-    }else{
-        basket.innerHTML += `<p> ${imgComplet}${nameObj}|${priceObj}$</p>`;
-        basket.innerHTML += `<button class="buttonBuy" id="buttonBuyID">go to buy</button>`;
-    }
 
     backgroundBasket.classList.add('blink');
   setTimeout(() => {
     backgroundBasket.classList.remove('blink'); 
   }, 1000); 
-
-
+  
+  updateDiv(objId);
   openBuyMenu();
 }
 
 
-function ghjk(obj){
-    return(parseInt(obj.match(/\d+/)))
+function updateDiv(idElement) {   
+  basket.innerHTML = "";
+  for(let i = 0; i < databaseArray.length; i++){
+    basket.innerHTML += `<p> ${databaseArray[i].img}${databaseArray[i].name}|${databaseArray[i].price}$</p>`;
+  }
+  basket.innerHTML += `<p class="priceBasketText">Price basket: ${priceBasket}$</p> 
+  <button class="buttonBuy" id="buttonBuyID">go to buy</button>`;
+}
+
+
+function parsing(obj){
+  return(parseInt(obj.match(/\d+/)))    //parsing object and serching number
 }
 
 
@@ -123,19 +123,22 @@ function openBasket() {
     
   } else {
     cartBasket.style.display = "none";
-   
   }
 }
-  function openBuyMenu(){
 
-    const popup = document.querySelector('.popup');
-		const overlay = document.querySelector('.overlay');
-		const popupBtn = document.getElementById('buttonBuyID');   
-		
-   
+    let popup = document.querySelector('.popup');
+		let overlay = document.querySelector('.overlay');
+		let popupBtn = document.getElementById('buttonBuyID'); 
+  
+    function openBuyMenu(){
+
+      popup = document.querySelector('.popup');
+		  overlay = document.querySelector('.overlay');
+		    popupBtn = document.getElementById('buttonBuyID');
 		popupBtn.addEventListener('click', () => {
 			popup.style.display = 'block';
 			overlay.style.display = 'block';
+      
 		});
 
 		overlay.addEventListener('click', () => {
@@ -143,70 +146,49 @@ function openBasket() {
 			overlay.style.display = 'none';
       if (cartBasket.style.display === "none") {
         cartBasket.style.display = "block";
-      
       } else {
         cartBasket.style.display = "none";
-       
       }
 		});
     
   }
-  const nameInput = document.getElementById("name").value;
-  const addressInput = document.getElementById("address").value;
-  const phoneInput = document.getElementById("phone").value;
-  const postNumberInput = document.getElementById("post_number").value;
+  sendDataBtn.addEventListener('click', function(e){
+    let qwe = new XMLHttpRequest();
+    qwe.withCredentials = false;
+    qwe.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        //console.log(this.responseText);
+      }
+    });
+    qwe.open("POST","https://robocodemarketplace-bec8.restdb.io/rest/orders");
+    qwe.setRequestHeader("content-type", "application/json");
+    qwe.setRequestHeader("x-apikey", "64149cd5bc22d22cf7b2600f");
+    qwe.setRequestHeader("cache-control", "no-cache");
+  
+      basket.innerHTML = "<p class='emptyCartText'>Cart is empty</p>";
+      popup.style.display = 'none';
+			overlay.style.display = 'none';
 
-
-  const sendDataBtn = document.getElementById("sendData");
-  console.log(sendDataBtn);
-    sendDataBtn.addEventListener('click', function(e){
-      let data = JSON.stringify({
-        "name": nameInput,
-        "address":addressInput,
-        "phone":phoneInput,
-        "post_number":postNumberInput,
+      data = JSON.stringify({
+        "name": nameInput.value,
+        "address":addressInput.value,
+        "phone":phoneInput.value,
+        "post_number":postNumberInput.value,
         "status":"new",
-        "products":databaseArray
+        "products":databaseArray,
+        "price":priceBasket
       });
-      console.log(data);
+
+     
+      qwe.send(data);
+
+      nameInput.value = "";
+      addressInput.value = "";
+      phoneInput.value = "";
+      postNumberInput.value = "";
+      priceBasket = 0;
+      databaseArray = [];
   });
   
 
-
-/*
-
-// Объект с данными
-let databaseObj = {
-  price: "1000",
-  name: "Товар 1",
-  img: "https://via.placeholder.com/150"
-};
-
-// Получаем элементы, в которые будут вставляться данные
-let nameElement = document.getElementById("name");
-let imgElement = document.getElementById("img");
-let priceElement = document.getElementById("price");
-
-// Функция для обновления дива с данными
-function updateDiv() {
-  nameElement.innerText = databaseObj.name;
-  imgElement.src = databaseObj.img;
-  priceElement.innerText = "Цена: " + databaseObj.price + " $.";
-}
-
-// Обработчик клика на кнопке
-let myButton = document.getElementById("myButton");
-myButton.addEventListener("click", function() {
-  // Обновляем объект с данными (например, получаем данные с сервера)
-  databaseObj = {
-    price: "2000",
-    name: "Товар 2",
-    img: "https://via.placeholder.com/250"
-  };
-  
-  // Обновляем див с данными
-  updateDiv();
-});
-
-// Обновляем див с данными при загрузке страницы
-updateDiv();*/
+ 

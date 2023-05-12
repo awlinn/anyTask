@@ -73,11 +73,13 @@ main{
     max-width: 350px;
     padding: 4%;
     border-radius: 1rem;
+    margin-bottom: 10px;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
+  
   
   .productImg{
     width: 40%;
@@ -191,8 +193,13 @@ h1{
   color: #fff;
 }
 
+.emptyCartText{
+  margin-left: 30%;
+}
 
-
+.priceBasketText{
+  color: rgb(7, 210, 7);
+}
 
 @keyframes blink {
   0% { background-color: rgba(255, 0, 0, 0); }
